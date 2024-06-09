@@ -13,13 +13,16 @@ int main() {
     int sales;
     char date_str[11]; // Buffer to hold the date string
 
+    int selection = 0;
+    int total_services = 0;
+    int total_homeplus = 0;
+    int total_accessory = 0;
+
     // Get the current date
     get_current_date(date_str, sizeof(date_str));
 
     while (1) {
-        int selection;
-        int total_services;
-        int total_homeplus;
+
 
         printf("\n");
         printf("Make a selection: \n");
@@ -29,6 +32,7 @@ int main() {
         printf("4) Verizon In-Person Refresh \n");
         printf("5) Home+ Sale \n");
         printf("6) Remote Tech Repair \n");
+        printf("7) Add Custom Sale \n");
         printf("9) Clear Total \n");
         printf("0) Save and Exit \n");
         scanf("%d", &selection);
@@ -58,6 +62,28 @@ int main() {
                 total_commission += 5;
                 total_services++;
                 break;
+            case 7:
+                double item_price;
+                double custom_commission;
+                clear_terminal();
+                printf("Enter price of item sold: \n");
+                if (scanf("%lf", &item_price) != 1) {
+                    printf("Invalid input!\n");
+                    break;
+                }
+                custom_commission = (item_price * 0.10);
+                total_commission += custom_commission;
+
+                // Debugging output
+                printf("custom_commission value: %.2lf\n", custom_commission);
+                printf("total_commission value: %.2lf\n", total_commission);
+                printf("Press any key to continue...");
+                // Clear input buffer
+                while (getchar() != '\n');
+                // Wait for any key press
+                getchar();
+                total_accessory++;
+                break;
             case 9:
                 total_commission = 0;
                 total_services = 0;
@@ -81,6 +107,9 @@ int main() {
        }
        if (total_homeplus > 0) {
            printf("Total home+ sales: %d\n", total_homeplus);
+       }
+       if (total_accessory > 0 ) {
+           printf("Total accessory sales: %d\n", total_accessory);
        }
 
     }
